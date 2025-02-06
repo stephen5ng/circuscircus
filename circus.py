@@ -1,33 +1,35 @@
 #!/usr/bin/env python
 
 import pygame
+import pygame.freetype
 
-pygame.font.init()
+
+SCALING_FACTOR = 6
+SCREEN_WIDTH = 128
+SCREEN_HEIGHT = 32
+
+pygame.init()
+pygame.freetype.init()
 
 pygame.font.get_init()
 
-display_surface = pygame.display.set_mode((640, 480))
+display_surface = pygame.display.set_mode(
+   (SCREEN_WIDTH*SCALING_FACTOR, SCREEN_HEIGHT*SCALING_FACTOR))
 
 pygame.display.set_caption('Circus Circus')
 
-font1 = pygame.font.SysFont('COURIER', 50)
-font2 = pygame.font.SysFont('COURIER', 40)
+font2 = pygame.font.SysFont('COURIER', 15)
 guess = ""
 alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-text1 = font1.render(guess, True, (0, 255, 0))
 text2 = font2.render(alphabet, True, (0, 255, 0))
-
-textRect1 = text1.get_rect()
 textRect2 = text2.get_rect()
-textRect1.center = (320, 250)
-textRect2.center = (320, 300)
+
+screen = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 while True:
-   display_surface.fill((0, 0, 0))
+   screen.fill((0, 0, 0))
 
-   display_surface.blit(text1, textRect1)
-   textRect1.center = (320, 200)
-   display_surface.blit(text2, textRect2)
+   screen.blit(text2, textRect2)
 
    for event in pygame.event.get():
       if event.type == pygame.KEYDOWN:
@@ -36,21 +38,19 @@ while True:
          if event.key == pygame.K_ESCAPE:
             guess = ""
             alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-            text1 = font1.render(guess, True, (0, 255, 0))
-            text2 = font2.render(alphabet, True, (0, 255, 0))
-            textRect1 = text1.get_rect()
+            text2 = font2.render(alphabet, True, (0, 128, 0))
          if event.key == pygame.K_SPACE:
             key = ' '
          if len(key) == 1:
             if key in alphabet:
                guess += key
                alphabet = alphabet.replace(key, ' ')
-               text1 = font1.render(guess, True, (0, 255, 0))
-               text2 = font2.render(alphabet, True, (0, 255, 0))
-               textRect1 = text1.get_rect()
+               text2 = font2.render(alphabet, True, (255, 255, 255))
 
       if event.type == pygame.QUIT:
          pygame.quit()
          quit()
 
+      pygame.transform.scale(screen,
+          display_surface.get_rect().size, dest_surface=display_surface)
       pygame.display.update()
