@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import pygame
 
 pygame.font.init()
@@ -23,9 +25,6 @@ textRect2.center = (320, 300)
 while True:
    display_surface.fill((0, 0, 0))
 
-   # copying the text surface objects
-   # to the display surface objects
-   # at the center coordinate.
    display_surface.blit(text1, textRect1)
    textRect1.center = (320, 200)
    display_surface.blit(text2, textRect2)
