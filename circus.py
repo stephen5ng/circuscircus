@@ -3,6 +3,7 @@
 import pygame
 from pygame import Color
 import pygame.freetype
+import sys
 import hub75
 
 SCALING_FACTOR = 6
@@ -43,11 +44,10 @@ while True:
    for event in pygame.event.get():
       if event.type == pygame.KEYDOWN:
          key = pygame.key.name(event.key).upper()
-         print(f"{key} {event.key} {pygame.key.name(event.key)} {pygame.K_ESCAPE}")
+         # print(f"{key} {event.key} {pygame.key.name(event.key)} {pygame.K_ESCAPE}")
          if event.key == pygame.K_ESCAPE:
             guess = ""
             alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-            text2 = font2.render(alphabet, True, (0, 128, 0))
          if event.key == pygame.K_SPACE:
             key = ' '
          if len(key) == 1:
@@ -63,7 +63,7 @@ while True:
 
       if event.type == pygame.QUIT:
          pygame.quit()
-         quit()
+         sys.exit(0)
 
       pygame.transform.scale(screen,
           display_surface.get_rect().size, dest_surface=display_surface)
